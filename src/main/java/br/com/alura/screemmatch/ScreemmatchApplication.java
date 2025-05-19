@@ -1,5 +1,6 @@
 package br.com.alura.screemmatch;
 
+import br.com.alura.screemmatch.model.DadosEpisodio;
 import br.com.alura.screemmatch.model.DadosSerie;
 import br.com.alura.screemmatch.service.ConsumoApi;
 import br.com.alura.screemmatch.service.ConverteDados;
@@ -17,12 +18,15 @@ public class ScreemmatchApplication implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		var consumoApi = new ConsumoApi();
-		var json = consumoApi.obterDados("http://www.omdbapi.com/?i=tt3896198&apikey=3adf325b");
+		var json = consumoApi.obterDados("https://www.omdbapi.com/?t=gilmore+girls&apikey=6585022c");
 		//System.out.println(json);
 		//json = consumoApi.obterDados("https://coffee.alexflipnote.dev/random.json");
 		System.out.println(json);
 		ConverteDados conversor = new ConverteDados();
 		DadosSerie dados = conversor.obterDados(json, DadosSerie.class);
 		System.out.println(dados);
+		json = consumoApi.obterDados("https://www.omdbapi.com/?t=gilmore+girls&season=1&episode=2&apikey=6585022c");
+		DadosEpisodio dadosEpisodio = conversor.obterDados(json, DadosEpisodio.class);
+		System.out.println(dadosEpisodio);
 	}
 }
