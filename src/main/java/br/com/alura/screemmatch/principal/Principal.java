@@ -3,6 +3,7 @@ package br.com.alura.screemmatch.principal;
 import br.com.alura.screemmatch.model.DadosEpisodio;
 import br.com.alura.screemmatch.model.DadosSerie;
 import br.com.alura.screemmatch.model.DadosTemporada;
+import br.com.alura.screemmatch.model.Episodio;
 import br.com.alura.screemmatch.service.ConsumoApi;
 import br.com.alura.screemmatch.service.ConverteDados;
 
@@ -11,6 +12,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Principal {
     private Scanner leitura = new Scanner(System.in);
@@ -58,5 +60,11 @@ public class Principal {
                 .limit(3)
                 .forEach(System.out::println);
 
+        List<Episodio> episodios = temporadas.stream()
+                .flatMap(t -> t.episodios().stream()
+                        .map(d -> new Episodio(t.numero(), d)))
+                .collect(Collectors.toList());
+
+        episodios.forEach(System.out::println);
     }
 }
